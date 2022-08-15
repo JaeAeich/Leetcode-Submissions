@@ -1,11 +1,8 @@
 class Solution {
 public:
     int minOperations(int n) {
-        int sum=0;
-        for(int i=1;i<=n;i++){
-            int oddnum=2*i-1;
-            sum+=abs(oddnum-n);
-        }
-        return sum/2;
+        int k=n/2;
+        int ans=n*k-(k)*(k+1)+k;
+        return ans;
     }
 };
