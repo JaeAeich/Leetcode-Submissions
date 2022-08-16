@@ -1,6 +1,6 @@
 class Solution {
 public:
-    set<vector<string>> finans={};
+    int c=0;
     
     bool isSafe(vector<string> &v,int &n, int row, int col){
         if(row<0 || col<0 || row>=n || col>=n) return false;
@@ -18,7 +18,7 @@ public:
     
     void helper(vector<string> &v, int &n, int i, int j){
         if(i>=n){
-            finans.insert(v);
+            c++;
             return;
         }
         if(j>=n) return;
@@ -47,6 +47,6 @@ public:
     }
     int totalNQueens(int n) {
         solveNQueens(n);
-        return finans.size();
+        return c;
     }
 };
