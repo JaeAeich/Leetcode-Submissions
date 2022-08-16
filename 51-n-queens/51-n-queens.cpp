@@ -16,7 +16,7 @@ public:
         return true;
     }
     
-    void helper(vector<string> v, int n, int i, int j){
+    void helper(vector<string> &v, int &n, int i, int j){
         if(i>=n){
             finans.push_back(v);
             return;
