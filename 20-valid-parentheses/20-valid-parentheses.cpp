@@ -2,7 +2,7 @@ class Solution {
 public:
     bool isValid(string s) {
         stack<char> st;
-        map<char,char> m;
+        unordered_map<char,char> m;
         // map closing backets
         m['{']='}';
         m['(']=')';
