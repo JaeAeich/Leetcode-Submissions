@@ -1,14 +1,18 @@
 class Solution {
-public:
+public:    
     bool isAnagram(string s, string t) {
-        multiset<char> string;
-        multiset<char> string1;
-        for(char ch: s){
-            string.insert(ch);
+        vector<int> v(26,0);
+        for(int i=0;s[i]!='\0';i++){
+            int idx=s[i]-'a';
+            v[idx]++;
         }
-        for(char ch: t){
-            string1.insert(ch);
+        for(int i=0;t[i]!='\0';i++){
+            int idx=t[i]-'a';
+            v[idx]--;
         }
-        return string==string1;
+        for(int i=0;i<26;i++){
+            if(v[i]!=0) return false;
+        }
+        return true;
     }
 };
