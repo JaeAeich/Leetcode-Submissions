@@ -15,12 +15,7 @@ public:
                 c+=m[sum-k];
             }
             //Else push the prefix sum into the Hashmap or increase its freq if already present.
-            if(m.find(sum)==m.end()){
-                m[sum]=1;
-            }
-            else{
-                m[sum]++;
-            }
+            m[sum]++;
         }
         return c;
     }
