@@ -7,9 +7,7 @@ public:
             for(int j=i;j<n;j++){
                 //swap the greater element with the smallest one.
                 if(v[j]<v[i]){
-                    v[i]^=v[j];
-                    v[j]^=v[i];
-                    v[i]^=v[j];
+                    swap(v[i],v[j]);
                 }
             }
         }
