@@ -17,13 +17,21 @@ public:
     //     return -1;
     // }
     
-    //using xor property
+    // //using xor property
+    // int missingNumber(vector<int>& nums) {
+    //     int ans=0,i=0;
+    //     for(;i<nums.size();i++){
+    //         ans^=nums[i]^i;
+    //     }
+    //     ans^=i;
+    //     return ans;
+    // }
+    
+    //using summation formula
     int missingNumber(vector<int>& nums) {
-        int ans=0,i=0;
-        for(;i<nums.size();i++){
-            ans^=nums[i]^i;
-        }
-        ans^=i;
-        return ans;
+        int sum=accumulate(begin(nums),end(nums),0);
+        int n=nums.size();
+        int summ=(n)*(n+1)/2;
+        return summ-sum;
     }
 };
