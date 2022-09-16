@@ -10,47 +10,19 @@
  */
 class Solution {
 public:
-    void push_tail(ListNode* &tail,int val){//---> pushes a val to a link list and returns tail.
-        if(tail==NULL){
-            tail=new ListNode(val);
-        }
-        ListNode* temp=new ListNode(val);
-        tail->next=temp;
-        tail=temp;
-    }
-    
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        int c=0,sum=0;
-        if(l1 && l2) sum=l1->val+l2->val+c;
-        else if(l1 && !l2) sum=l1->val+c;
-        else if(!l1 && l2) sum=l2->val+c;
-        if(l1) l1=l1->next;
-        if(l2) l2=l2->next;
-        if(sum>9) sum-=10,c=1;
-        else c=0;
-        ListNode *head=new ListNode(sum),*tail=head;
-        while(l1 || l2){
-            if(l1 && l2) sum=l1->val+l2->val+c;
-            else if(l1 && !l2) sum=l1->val+c;
-            else if(!l1 && l2) sum=l2->val+c;
-            
-            if(sum>9) sum-=10,c=1;
-            else c=0;
-            push_tail(tail,sum);
+        int c=0;//-->carry 
+        ListNode *prevHead=new ListNode(0);
+        ListNode *tail=prevHead;
+        
+        while(c || l1 || l2){
+            c+=(l1?l1->val:0)+(l2?l2->val:0);
+            tail->next=new ListNode(c%10);//-->since total sum mod 10 is val we need to store.
+            tail=tail->next;
+            c/=10; // --> carry in decimal sys is numbers right shift 
             if(l1) l1=l1->next;
             if(l2) l2=l2->next;
         }
-        if(c) push_tail(tail,c);
-        return head;
+        return prevHead->next;
     }
 };
-
-
-
-
-
-
-
-
-
-
