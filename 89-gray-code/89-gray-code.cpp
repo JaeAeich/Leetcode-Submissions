@@ -41,7 +41,8 @@ public:
     //Maths--> n th gray code is n^(n/2) ie xor of num and num/2.    
     vector<int> grayCode(int n){
         vector<int> v;
-        for(int i=0;i<(1<<n);i++){
+        int p=(1<<n);
+        for(int i=0;i<p;i++){
             v.push_back(i^(i/2));
         }
         return v;
