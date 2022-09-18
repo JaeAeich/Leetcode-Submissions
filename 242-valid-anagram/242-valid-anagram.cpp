@@ -1,18 +1,14 @@
 class Solution {
-public:    
+public:
     bool isAnagram(string s, string t) {
-        vector<int> v(26,0);
-        for(int i=0;s[i]!='\0';i++){
-            int idx=s[i]-'a';
-            v[idx]++;
+        map<char,int> m1;
+        map<char,int> m2;
+        //frequency count of character.
+        if(s.size()!=t.size()) return false;
+        for(int i=0;i<s.size();i++){
+            m1[s[i]]++;
+            m2[t[i]]++;
         }
-        for(int i=0;t[i]!='\0';i++){
-            int idx=t[i]-'a';
-            v[idx]--;
-        }
-        for(int i=0;i<26;i++){
-            if(v[i]!=0) return false;
-        }
-        return true;
+        return m1==m2;
     }
 };
