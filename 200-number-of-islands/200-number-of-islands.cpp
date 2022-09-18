@@ -8,12 +8,12 @@ public:
         dfs(v,i,j+1);
         dfs(v,i,j-1);
         dfs(v,i-1,j);
-        
     }
     int numIslands(vector<vector<char>>& grid) {
         int c=0;
-        for(int i=0;i<grid.size();i++){
-            for(int j=0;j<grid[0].size();j++){
+        int n=grid.size(),m=grid[0].size();
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
                 //for each '1' flood filling the grid.
                 if(grid[i][j]=='1'){
                     dfs(grid,i,j);
