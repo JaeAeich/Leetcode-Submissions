@@ -14,7 +14,9 @@ public:
     vector<vector<int>> finans={};
     
     void dfs(TreeNode* root, int t, vector<int> ans={},int sum=0){
+        //if nullptr reached that means condition hasn't been satisfied.
         if(!root) return;
+        //condition is satisfied, check if its leaf node.
         if(!root->left && !root->right){
             if(sum+root->val==t){
                 ans.push_back(root->val);
