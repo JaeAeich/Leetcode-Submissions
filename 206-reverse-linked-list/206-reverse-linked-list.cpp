@@ -10,15 +10,42 @@
  */
 class Solution {
 public:
+    // //Interative
+    // ListNode* reverseList(ListNode* head) {
+    //     ListNode *prev=NULL,*cur=head;
+    //     while(cur){
+    //         //link prev current node to prev node and move cuurent pointer to the next node.
+    //         ListNode *n=cur->next;
+    //         cur->next=prev;
+    //         prev=cur;
+    //         cur=n;
+    //     }
+    //     return prev;
+    // }
+    
+    //Recursive
     ListNode* reverseList(ListNode* head) {
-        ListNode *prev=NULL,*cur=head;
-        while(cur){
-            //link prev current node to prev node and move cuurent pointer to the next node.
-            ListNode *n=cur->next;
-            cur->next=prev;
-            prev=cur;
-            cur=n;
+        if(!head) return nullptr;
+        if(!head->next) {
+            return head;
         }
-        return prev;
+        ListNode *node=reverseList(head->next);
+        ListNode* temp=node;
+        while(temp->next) temp=temp->next;
+        temp->next=head;
+        head->next=nullptr;
+        return node;
     }
 };
+
+
+
+
+
+
+
+
+
+
+
+
