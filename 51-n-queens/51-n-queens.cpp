@@ -1,49 +1,38 @@
 class Solution {
 public:
-    vector<vector<string>> finans={};
+    vector<vector<string>> finans;
     
-    bool isSafe(vector<string> &v,int &n, int row, int col){
-        if(row<0 || col<0 || row>=n || col>=n) return false;
-        for(int i=0;i<row;i++){
-            if(v[i][col] =='Q') return false;
+    //checking the if (i,j) pos is safe for the queen, by checking in both upper diagonals and upper vertical direction .
+    bool pos(vector<string> v,int i,int j){
+        for(int idx=0;idx<i;idx++){
+            if(v[idx][j]=='Q') return false;
         }
-        for(int i=row-1,j=col-1;i>=0 && j>=0;--i,--j){
-            if(v[i][j]=='Q') return false;
+        for(int idx=i-1,jdx=j+1;idx>=0 && jdx<v.size();idx--,jdx++){
+            if(v[idx][jdx]=='Q') return false;
         }
-        for(int i=row-1,j=col+1;i>=0 && j<n;--i,++j){
-            if(v[i][j]=='Q') return false;
+        for(int idx=i-1,jdx=j-1;idx>=0 && jdx>=0;idx--,jdx--){
+            if(v[idx][jdx]=='Q') return false;
         }
         return true;
     }
     
-    void helper(vector<string> &v, int &n, int i, int j){
-        if(i>=n){
+    //dfs
+    void helper(vector<string> &v,int idx=0){
+        if(idx>=v.size()){
             finans.push_back(v);
             return;
         }
-        if(j>=n) return;
-        
-        if(isSafe(v,n,i,j)){
-            v[i][j]='Q';
-            helper(v,n,i+1,0);
-            v[i][j]='.';
-            helper(v,n,i,j+1);
-        }
-        else{
-            helper(v,n,i,j+1);
+        for(int i=0;i<v.size();i++){
+            if(!pos(v,idx,i)) continue;
+            v[idx][i]='Q';
+            helper(v,idx+1);
+            v[idx][i]='.';
         }
     }
-    
+    //driver code
     vector<vector<string>> solveNQueens(int n) {
-        vector<string> board;
-        for(int i=0;i<n;i++){
-            string temp;
-            for(int j=0;j<n;j++){
-                temp+='.';
-            }
-            board.push_back(temp);
-        }
-        helper(board,n,0,0);
+        vector<string> b(n,string(n,'.'));
+        helper(b);
         return finans;
     }
 };
