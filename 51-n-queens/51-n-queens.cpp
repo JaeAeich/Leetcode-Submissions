@@ -3,7 +3,7 @@ public:
     vector<vector<string>> finans;
     
     //checking the if (i,j) pos is safe for the queen, by checking in both upper diagonals and upper vertical direction .
-    bool pos(vector<string> v,int i,int j){
+    bool pos(vector<string> &v,int i,int j){
         for(int idx=0;idx<i;idx++){
             if(v[idx][j]=='Q') return false;
         }
