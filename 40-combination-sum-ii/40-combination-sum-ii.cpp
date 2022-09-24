@@ -10,6 +10,7 @@ public:
         }
         
         for(int i=idx;i<v.size();++i){
+            if(t-v[i]<0) return;
             ans.push_back(v[i]);
             helper(v,t-v[i],i+1,ans);
             while(i+1<v.size() && v[i]==v[i+1]) i++;
