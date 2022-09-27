@@ -16,14 +16,13 @@ public:
     
     //in place 
     void moveZeroes(vector<int>& v) {
-        int c=0,i=0;
+        int c=0;
+        int i=0;
         for(;i<v.size();i++){
             if(!v[i]) c++;
             else v[i-c]=v[i];
         }
-        for(int i=v.size()-c;i<v.size();i++){
-            v[i]=0;
-        }
+        for(int i=v.size()-c;i<v.size();i++) v[i]=0;
     }
     
 };
