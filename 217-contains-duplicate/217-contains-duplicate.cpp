@@ -9,6 +9,27 @@ public:
     //     return false;
     // }
     
+//     // brute force (tle)
+//     bool containsDuplicate(vector<int>& v) {
+//         for (int i=0;i<v.size()-1;i++){
+//             for(int j=i+1;j<v.size();j++){
+//                 if(v[i]==v[j]) return true;
+//             }
+//         }
+//         return false;
+//     }
+//     // Using hash map, TC:O(N), SC:O(N)
+//     bool containsDuplicate(vector<int>& v) {
+//         map<int,int> m;
+//         for(int val:v){
+//             if(m[val]){
+//                 return true;
+//             }
+//             else m[val]=1;
+//         }
+//         return false;
+//     }
+    
     //hash
     bool containsDuplicate(vector<int>& v) {
         set<int> s;
