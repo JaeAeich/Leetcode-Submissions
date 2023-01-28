@@ -1,22 +1,29 @@
 class Solution {
 public:
     bool isValid(string s) {
+        //creating a hash map to differentiate between opening and closing braces.
+        map<char,int> m;
+        m['(']=1;       
+        m['[']=2;
+        m['{']=3;
+        m[')']=-1;
+        m[']']=-2;
+        m['}']=-3;
         stack<char> st;
-        //push brackets in stack if its opening bracket.
-        for(int i=0;s[i]!='\0';i++){
-            if(s[i]=='(' || s[i]=='{' || s[i]=='['){
-                st.push(s[i]);
+        //iterating through braces.
+        for(char c:s){
+            /*if brace pair is found popping from stack and not pushing the
+            closing brace in stack.
+            Note : Closing brace should only pop the opening brace.
+            ie: {+} =0 and }+{!=0 */
+            if(!st.empty() && m[st.top()]+m[c]==0 && m[c]<0){
+                st.pop();
+                continue;
             }
-            else{
-                // if its not opening and top is its counter part then pop from stack. if stack is empty you cant push closing bracket so return false.
-                char top=st.top();
-                if(st.empty()) return false;
-                if(top=='(' && s[i]==')' || top=='{' && s[i]=='}'||top=='[' && s[i]==']'){
-                    st.pop();
-                }
-                else return false;
-            }
+            //else pushing the brace in.
+            st.push(c);
         }
+        //if stack is empty returning true.
         return st.empty();
     }
 };
