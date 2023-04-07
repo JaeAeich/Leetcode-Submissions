@@ -51,7 +51,7 @@ public:
 
     */
     int coinChange(vector<int>& coins, int amount) {
-        vector<vector<int>> dp(1e4+1,vector<int>(12,-1));
+        vector<vector<int>> dp(amount+1,vector<int>(coins.size(),-1));
         long ans = helper(coins,dp,amount);
         return ans>=INT_MAX?-1:ans ;
     }
