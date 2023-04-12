@@ -1,21 +1,23 @@
 class Solution {
 public:
-    bool helper(vector<int> &v,vector<vector<int>> &dp,int sum, int tot=0, int i=0){
-        if(i>=v.size() || tot>sum) return 0;
-        if(sum==tot) return 1;
+    bool helper(vector<int>& nums,vector<vector<int>> &dp,int t, int i){
+        //base case
+        if(t==0) return true;
+        if(t<0 | i<0) return false;
         
-        if(dp[tot][i]!=-1) return dp[tot][i];
+        //memoize
+        if(dp[t][i]!=-1) return dp[t][i];
         
-        return dp[tot][i]=helper(v,dp,sum,tot+v[i],i+1) || helper(v,dp,sum,tot,i+1);
+        return dp[t][i]=helper(nums,dp,t-nums[i],i-1) | helper(nums,dp,t,i-1);
     }
     
     bool canPartition(vector<int>& nums) {
-        int sum = accumulate ( begin(nums),end(nums),0);
-        if(sum%2!=0) return 0;
+        int n = nums.size();
+        int sum = accumulate(begin(nums),end(nums),0);
+        //can't be divided into 2 parts.
+        if(sum%2!=0) return false;
         
-        int maxx = *max_element(begin(nums),end(nums));
-        vector<vector<int>> dp(sum/2+maxx+1,vector<int>(nums.size(),-1));
-        
-        return helper(nums,dp,sum/2);
+        vector<vector<int>> dp(sum/2+1,vector<int>(n,-1));
+        return helper(nums,dp,sum/2,n-1);
     }
 };
