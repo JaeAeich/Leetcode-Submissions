@@ -7,18 +7,17 @@ public:
         //memoize
         if(dp[i][j]!=-1) return dp[i][j];
         //all possibility
-        int take = INT_MAX;
         if(a[i]==b[j]){
-            take = helper(dp,a,b,i+1,j+1);
+            return dp[i][j] = helper(dp,a,b,i+1,j+1);
         }
-        int del = 1 + helper(dp,a,b,i+1,j);
-        int ins = 1 + helper(dp,a,b,i,j+1);
-        int rep = INT_MAX;
-        if(a[i]!=b[j]){
-            rep = 1 + helper(dp,a,b,i+1,j+1);
+        else{
+            int del = 1 + helper(dp,a,b,i+1,j);
+            int ins = 1 + helper(dp,a,b,i,j+1);
+            int rep = 1 + helper(dp,a,b,i+1,j+1);
+            //take min
+            return dp[i][j]=min(min(del,ins),rep);
         }
-        //take min
-        return dp[i][j]=min(min(min(take,del),ins),rep);
+
     }
     
     int minDistance(string word1, string word2) {
