@@ -1,17 +1,25 @@
 class Solution {
 public:
-    int helperMemo(vector<vector<int>> &dp, int n, int m,int i=0, int j=0){
-        if(j>=m || i>=n) return 0;
-        if(i==n-1 && j==m-1) return 1;
-        if(dp[i][j]!=-1) return dp[i][j];
-        int down = helperMemo(dp,n,m,i+1,j);
-        int right = helperMemo(dp,n,m,i,j+1);
-        
-        return dp[i][j] = down + right;
+    //calculating nCr
+    long long C(int n, int r) {
+        if(r > n - r) r = n - r; // because C(n, r) == C(n, n - r)
+        long long ans = 1;
+        int i;
+
+        for(i = 1; i <= r; i++) {
+            ans *= n - r + i;
+            ans /= i;
+        }
+
+        return ans;
     }
     
     int uniquePaths(int m, int n) {
-        vector<vector<int>> dp(m+1,(vector<int> (n+1,-1)));
-        return helperMemo(dp,m,n);
+        //to traverse this matrix, m-1 Downs and n-1 Rights are needed
+        //so in total m+n-2 places ans m-1 one kind of thing ans n-1 other things need to be arranged
+        //ie C((m+n-1),(m-1))
+        int a = m+n-2;
+        int b = m-1;
+        return C(a,b);
     }
 };
