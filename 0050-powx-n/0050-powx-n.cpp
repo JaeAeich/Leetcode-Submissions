@@ -1,32 +1,34 @@
 class Solution {
 public:
-    double fastPow (double a, long b){
-        //Initialise the ans.
-        double res = 1.0;
-        
-        while(b){
-            //if exponent is odd, multiply result with the number to make the exponent even.
-            if(b&1){
-                res*=a;
+    // Assume only accepts pos n and x
+    double fastPow(double x, long long int  n){
+        double res = 1;
+        while(n){
+            if(n&1){
+                res *= x;
             }
-            
-            //increase the base
-            a*=a;
-            
-            //decrease the exponent
-            b=b>>1;
+            x *= x;
+            n >>= 1;
         }
         return res;
     }
     
-    double myPow(double x, int n) {
-        //base case
-        if(n==0 || x==1) return 1.0;
-        if(x==0) return x;
+    
+    double myPow(double x, long long int n) {
+        // Obvious case 
+        if(x == 1 or n == 0) return 1;
         
-        if(n>0){
+        if(n < 0) x = 1/x;
+        
+        // if(n==INT_MIN)
+        n = abs(n);
+        
+        if(x<0){
+            x = abs(x);
+            if(n%2) return -fastPow(x,n);
             return fastPow(x,n);
         }
-        return fastPow(1/x,abs(n)*1LL);
+        
+        return fastPow(x,n);
     }
 };
