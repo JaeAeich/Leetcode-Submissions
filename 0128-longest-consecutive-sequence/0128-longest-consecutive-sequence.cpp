@@ -24,30 +24,26 @@ public:
 //         return ans;
 //     }
     
-    // Using hashmap
+    // Using unordered_set
     int longestConsecutive(vector<int>& v) {
-        map<int,int> m;
         unordered_set<int> s;
         int ans = 0;
         
-        // Push all the value in map and set
+        // Push all the value in set
         for(auto val : v){
-            // Don't store repetitive values 
-            if(m.find(val)==m.end()) s.insert(val);
-            m[val]++;
+            s.insert(val);
         }
         
-        // For all non repetive value
         for(auto it=begin(s);it!=end(s);it++){
             // If there is ele - 1, then no operation
-            if(m.find(*it-1)!=m.end()) continue;
+            if(s.find(*it-1)!=s.end()) continue;
             
             // There is a possibility for consecutive sequence
             else{
                 int f=1;
                 int prev = *it;
                 // Find how many consecutive ele are present
-                while(m.find(prev+1)!=m.end()){
+                while(s.find(prev+1)!=s.end()){
                     f++;
                     prev = prev+1;
                 }
