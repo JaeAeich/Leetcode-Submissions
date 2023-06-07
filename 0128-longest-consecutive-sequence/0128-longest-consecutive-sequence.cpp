@@ -27,7 +27,7 @@ public:
     // Using hashmap
     int longestConsecutive(vector<int>& v) {
         map<int,int> m;
-        set<int> s;
+        unordered_set<int> s;
         int ans = 0;
         
         // Push all the value in map and set
