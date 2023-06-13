@@ -1,0 +1,7 @@
+type Fn = (accum: number, curr: number) => number
+
+function reduce(nums: number[], fn: Fn, init: number): number {
+    let ans = init;
+    nums.forEach((val) => ans = fn(ans,val));
+    return ans;
+};
