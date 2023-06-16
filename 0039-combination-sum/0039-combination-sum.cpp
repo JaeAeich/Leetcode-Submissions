@@ -17,6 +17,7 @@ public:
     }
     
     vector<vector<int>> combinationSum(vector<int>& v, int t) {
+        sort(begin(v),end(v));
         helper(v,t);
         return finans;
     }
