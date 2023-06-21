@@ -4,9 +4,12 @@ private:
     
     // Mark all the moves that aren't valid after placing queen at i, j
     void markNotPossiblePaths(vector<vector<bool>>& valid, int n, int i, int j) {
-        // all the possible directions of attack
+        /* All the possible directions of attack, no need for other two as acc this algo 
+        we are moving down the board, this means all the attacks coming from above have
+        been taken care of.
+        */
         static const vector<pair<int, int>> directions = {
-            {-1, -1}, {-1, 1}, {1, -1}, {1, 1}
+            {1, -1}, {1, 1}
         };
 
         // Mark vertical and horizontal directions as invalid
