@@ -2,56 +2,48 @@ class Solution {
 private:
     vector<vector<string>> finans = {};
     
-    // Mark all the moves that aren't valid after placing queen at i, j
-    void markNotPossiblePaths(vector<vector<bool>>& valid, int n, int i, int j) {
-        /* All the possible directions of attack, no need for other two as acc this algo 
-        we are moving down the board, this means all the attacks coming from above have
-        been taken care of.
-        */
+    // Checks if i, j  is a safe position for a queen
+    bool isValid(vector<string>& board, int n, int i, int j) {
+        // Check if any queen is atttacking i, j
         static const vector<pair<int, int>> directions = {
-            {1, -1}, {1, 1}
+            {-1, 1}, {-1, -1}
         };
 
-        // Mark vertical and horizontal directions as invalid
+        // Check vertical directions as invalid
         for (int k = 0; k < n; k++) {
-            valid[i][k] = false;
-            valid[k][j] = false;
+            if(board[k][j]=='Q') return false;
         }
 
 
-        // Mark all the cross directions
+        // Check cross directions
         for (const auto& dir : directions) {
-            int x = i + dir.first;
-            int y = j + dir.second;
+            int x = i;
+            int y = j;
             while (x >= 0 && x < n && y >= 0 && y < n) {
-                valid[x][y] = false;
+                if(board[x][y] == 'Q') return false;
                 x += dir.first;
                 y += dir.second;
             }
         }
+        return true;
     }
 
     // Generate the possibilities
-    void helper(vector<string> &board, vector<vector<bool>> &valid, int n, int i=0){
+    void helper(vector<string> &board, int n, int i=0){
         // If the borad is exhauseted store that board
-        if(i >= board.size()) {
+        if(i >= n) {
             finans.push_back(board);
             return;
         }
         
         for(int j = 0; j < n; j++){
             // If i, j is a valid position for queen
-            if(valid[i][j]){
+            if(isValid(board, n, i, j)){
                 // Put the queen at i, j
                 board[i][j]='Q';
-                vector<vector<bool>> temp = valid;
-                
-                // Mark all the places queen can;t be kept due to this queen
-                markNotPossiblePaths(valid, n, i, j);
-                helper(board, valid, n, i+1);
+                helper(board, n, i+1);
                 
                 // Backtrack
-                valid = temp;
                 board[i][j]='.';
             }
         }
@@ -60,21 +52,9 @@ public:
     
     // Driver code
     vector<vector<string>> solveNQueens(int n) {
-        // Valid vector, tells if queen at i,j is possible or not
-        vector<vector<bool>> valid(n,vector<bool>(n,1));
-        
-        // Create a board
-        vector<string> board;
-        for(int i = 0; i < n; i++){
-            string temp = "";
-            for(int i = 0; i < n; i++){
-                temp +='.';
-            }
-            board.push_back(temp);
-        }
-        
-        // Generate all the possible boards and return
-        helper(board, valid, n);
+        // Create an empty board
+        vector<string> board (n, string(n, '.'));
+        helper(board,n);
         return finans;
     }
 };
