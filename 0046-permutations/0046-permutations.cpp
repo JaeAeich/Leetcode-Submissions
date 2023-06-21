@@ -4,7 +4,7 @@ private:
     vector<vector<int>> finans = {};
     
     // Calculate the permutations
-    void helper(vector<int>& v, vector<bool> &taken, vector<int> ans = {}){
+    void helper(vector<int>& v, vector<bool> &taken, vector<int> &ans){
         if(ans.size() == v.size()){
             finans.emplace_back(ans);
             return;
@@ -31,7 +31,8 @@ public:
     // Driver code
     vector<vector<int>> permute(vector<int>& v) {
         vector<bool> taken(v.size());
-        helper(v, taken);
+        vector<int> ans = {};
+        helper(v, taken, ans);
         return finans;
     }
 };
