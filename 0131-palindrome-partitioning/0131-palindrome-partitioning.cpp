@@ -1,44 +1,38 @@
 class Solution {
-public:
-    // Store final ans
-    vector<vector<string>> finans = {};
-    
-    // Checks if str a is palindrome
-    bool check(string a){
-        int i=0,j=a.length()-1;
-        while(i<=j){
-            if(a[i]!=a[j]) return false;
-            i++,j--;
+private:
+    vector<vector<string>> ans = {};
+
+    // Check if the strig is a palindorm 
+    bool isPal(string s){
+        for(int i = 0, j = s.length() - 1; i < j;){
+            if(s[i++] != s[j--]) return false;
         }
         return true;
     }
-    
-    // Helper function
-    void helper(string s, string strAns ="", vector<string> ans={}, int i=0){
-        if(i>=s.length()){
-            if(!strAns.empty() && check(strAns)){
-                ans.push_back(strAns);
-                finans.push_back(ans);
+
+    void helper(string s, string soFar = "", vector<string> ans_here = {}, int i = 0){
+        if(i >= s.length()){
+            if(soFar == ""){
+                ans.push_back(ans_here);
             }
-            return ;
-        } 
-        
-        // Take the ith ele
-        strAns += s[i];
-        
-        // If this makes a palindrome, find another palindrome after this
-        if(check(strAns)){
-            ans.push_back(strAns);
-            helper(s,"",ans,i+1);
-            ans.pop_back();
+            return;
         }
 
-        // Make is bigger str, maybe that makes a palindrome
-        helper(s,strAns,ans,i+1);
+        // Take this char and check if this makes a Pal
+        soFar += s[i];
+        if(isPal(soFar)){
+            ans_here.push_back(soFar);
+            helper(s, "", ans_here, i+1);
+            ans_here.pop_back();
+        }
+        // If string so far isn't a palindrom
+        helper(s, soFar, ans_here, i+1);
     }
+
     
+public:
     vector<vector<string>> partition(string s) {
         helper(s);
-        return finans;
+        return ans;
     }
 };
