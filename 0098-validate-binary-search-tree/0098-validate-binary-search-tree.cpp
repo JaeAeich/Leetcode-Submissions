@@ -11,28 +11,14 @@
  */
 class Solution {
 private:
-    bool check(TreeNode* root, int val, bool flag){
+    bool helper(TreeNode* root, long long int lo, long long int hi){
         if(!root) return true;
-        int curr = root->val;
-        
-        if(!flag){
-            return curr < val && check(root->right, val, flag) && check(root->left, val, flag); 
-        }
-        else{
-            return curr > val && check(root->right, val, flag) && check(root->left, val, flag); 
-        }
-    }
-    
-    bool dfs(TreeNode* root){
-        if(!root) return true;
-        int val = root->val;
-        bool left = check(root->left, val, false);
-        bool right = check(root->right, val, true);
-        
-        return left && right && dfs(root->left) && dfs(root->right);
+        long long int val = root->val;
+        return (val > lo && val < hi) && helper(root->left, lo, val) && helper(root->right, val, hi);
     }
 public:
     bool isValidBST(TreeNode* root) {
-        return dfs(root);
+        long long int lo = LLONG_MIN, hi = LLONG_MAX;
+        return helper(root, lo, hi);
     }
 };
