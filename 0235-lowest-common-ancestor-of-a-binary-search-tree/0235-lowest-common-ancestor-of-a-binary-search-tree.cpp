@@ -9,26 +9,17 @@
  */
 
 class Solution {
-private:
-    TreeNode* ans = nullptr;
-    
-    bool has(TreeNode* root, TreeNode* p){
-        if(!root) return false;
-        
-        return root == p || has(root->left, p) || has(root->right, p);
-        
-    }
-    
-    void dfs(TreeNode* root, TreeNode* p, TreeNode* q){
-        if(!root) return ;
-        if(has(root, p) && has(root, q)) ans = root;
-        dfs(root->left, p, q);
-        dfs(root->right, p, q);
-    }
-    
 public:
-    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        dfs(root, p, q);
-        return ans;
+    TreeNode* lowestCommonAncestor(TreeNode* r, TreeNode* p, TreeNode* q) {
+        if(!r) return nullptr;
+        if(r == p || r == q) return r;
+        int rv = r->val;
+        int pv = p->val;
+        int qv = q->val;
+        if((rv > pv && rv < qv) || (rv < pv && rv >qv)){
+            return r;
+        }
+        else if(rv > pv && rv > qv) return lowestCommonAncestor(r->left, p, q);
+        return lowestCommonAncestor(r->right, q, p);
     }
 };
