@@ -1,36 +1,12 @@
 class Solution {
 public:
     bool increasingTriplet(vector<int>& v) {
-        int n = v.size();
-        vector<int> nge(n, -1);
-        vector<int> pse(n, -1);
-        stack<int> s;
-        
-        for(int i = 0; i < n; i++){
-            while(!s.empty() && v[s.top()] < v[i]){
-                nge[s.top()] = i;
-                s.pop();
-            }
-            s.push(i);
-        }
-        
-        // Reset the stack for the second loop
-        stack<int>().swap(s); // Clear the stack
-
-        for(int i = 0; i < n; i++){
-            while (!s.empty() && v[s.top()] >= v[i]) {
-                s.pop();
-            }
-
-            if (!s.empty()) {
-                pse[i] = s.top();
-            }
-
-            s.push(i);
-        }
-        
+        int lo = INT_MAX;
+        int hi = INT_MAX;
         for(int i = 0; i < v.size(); i++){
-            if(pse[i] != -1 && nge[i] != -1) return true;
+            if(v[i] <= lo) lo = v[i];
+            else if(v[i] < hi) hi = v[i];
+            else if(v[i] > hi) return true;
         }
         return false;
     }
