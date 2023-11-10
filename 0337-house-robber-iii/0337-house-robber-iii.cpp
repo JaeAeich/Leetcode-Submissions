@@ -9,38 +9,31 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-
-#include <unordered_map>
-
 class Solution {
 private:
-    unordered_map<bool, unordered_map<TreeNode*, int>> memo;
-
-    int helper(TreeNode* root, bool pick) {
-        if (!root) return 0;
-
-        // Check if the result is already memoized
-        if (memo.find(pick) != memo.end() && memo[pick].find(root) != memo[pick].end()) {
-            return memo[pick][root];
-        }
-
-        int take = 0;
-
-        if (!pick) {
-            take = root->val + helper(root->left, true) + helper(root->right, true);
-        }
-
-        int leave = helper(root->left, false) + helper(root->right, false);
-
-        // Memoize the result
-        memo[pick][root] = max(take, leave);
-
-        return memo[pick][root]; // Corrected this line
+    unordered_map<TreeNode*, int> dp;
+    
+    int helper(TreeNode* root){
+        if(!root) return 0;
+        if(!root->left && !root->right) return root->val;
+        
+        if(dp.find(root) != dp.end()) return dp[root];
+        
+        int pick = root->val;
+        if(root->left) pick += helper(root->left->left) + helper(root->left->right);
+        if(root->right) pick += helper(root->right->left) + helper(root->right->right);
+        
+        int leave = helper(root->left) + helper(root->right);
+        
+        return dp[root] = max(pick, leave);
     }
-
 public:
     int rob(TreeNode* root) {
-        return helper(root, false);
+        int pick = helper(root);
+        int leave = 0;
+        if(root->left) leave += helper(root->left);
+        if(root->right) leave += helper(root->right);
+        
+        return max(pick, leave);
     }
 };
-
